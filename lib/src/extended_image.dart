@@ -660,7 +660,7 @@ class _ExtendedImageState extends State<ExtendedImage>
   @override
   void didChangeAccessibilityFeatures() {
     super.didChangeAccessibilityFeatures();
-    setState(() {
+    if(mounted) setState(() {
       _updateInvertColors();
     });
   }
@@ -692,7 +692,7 @@ class _ExtendedImageState extends State<ExtendedImage>
         _imageInfo != null &&
         !rebuild &&
         _imageStream?.key == newStream?.key) {
-      setState(() {
+      if(mounted) setState(() {
         _loadState = LoadState.completed;
       });
     }
@@ -708,7 +708,7 @@ class _ExtendedImageState extends State<ExtendedImage>
 //      pendingImages.remove(imageProvider);
 //    }
 
-    setState(() {
+    if(mounted) setState(() {
       _loadState = LoadState.failed;
     });
     if (!widget.enableMemoryCache || widget.clearMemoryCacheIfFailed) {
@@ -722,7 +722,7 @@ class _ExtendedImageState extends State<ExtendedImage>
 //      pendingImages.remove(imageProvider);
 //    }
 
-    setState(() {
+    if(mounted) setState(() {
       if (imageInfo != null) {
         _loadState = LoadState.completed;
       } else {
@@ -748,7 +748,7 @@ class _ExtendedImageState extends State<ExtendedImage>
           ImageStreamListener(_handleImageChanged, onError: _loadFailed));
 
     if (!widget.gaplessPlayback || rebuild) {
-      setState(() {
+      if(mounted) setState(() {
         _imageInfo = null;
         _loadState = LoadState.loading;
       });
